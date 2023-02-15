@@ -290,15 +290,18 @@ public class PaymentController {
         log.info("서치={}", keyword);
         String employeeNo = principal.getName();
         PaymentState state = PaymentState.진행중;
+        log.info("state={}", state);
 
         if(payment.equals("vacation")) {
 
             if (keyword != null) {
-                List<Vacation> list = vacationService.search(keyword, state);
+                List<Vacation> list = vacationService.search(keyword);
+                log.info("휴가2222={}",list);
                 model.addAttribute("list", list);
                 model.addAttribute("vacation", "vacation");
             } else  {
                 List<Vacation> list = vacationService.selectByApproverNoAndState(employeeNo, state);
+                log.info("휴가={}",list);
                 model.addAttribute("list", list);
                 model.addAttribute("vacation", "vacation");
             }
@@ -306,7 +309,7 @@ public class PaymentController {
         } else if(payment.equals("trip")) {
 
             if (keyword != null){
-                List<BusinessTrip> list = businessTripService.search(keyword, state);
+                List<BusinessTrip> list = businessTripService.search(keyword);
                 model.addAttribute("list", list);
                 model.addAttribute("trip", "trip");
             } else {
@@ -319,7 +322,7 @@ public class PaymentController {
         } else if(payment.equals("leave")) {
 
             if (keyword != null){
-                List<Leave> list = leaveService.search(keyword, state);
+                List<Leave> list = leaveService.search(keyword);
                 model.addAttribute("list", list);
                 model.addAttribute("leave", "leave");
             } else {
@@ -331,7 +334,7 @@ public class PaymentController {
         } else if(payment.equals("card")){
             log.info("test");
             if (keyword != null) {
-                List<BusinessCard> list = businessCardService.search(keyword, state);
+                List<BusinessCard> list = businessCardService.search(keyword);
                 model.addAttribute("list", list);
                 model.addAttribute("card", "card");
             } else {
@@ -353,7 +356,7 @@ public class PaymentController {
 
         if(payment.equals("vacation")){
             if (keyword != null) {
-                List<Vacation> list = vacationService.search2(keyword, state, state2);
+                List<Vacation> list = vacationService.search2(keyword);
                 log.info(list.toString());
                 model.addAttribute("list", list);
                 model.addAttribute("vacation", "vacation");
@@ -366,7 +369,7 @@ public class PaymentController {
 
         } else if(payment.equals("trip")) {
             if (keyword != null) {
-                List<BusinessTrip> list = businessTripService.search2(keyword, state, state2);
+                List<BusinessTrip> list = businessTripService.search2(keyword);
                 model.addAttribute("list", list);
                 model.addAttribute("trip", "trip");
             } else {
@@ -377,7 +380,7 @@ public class PaymentController {
 
         } else if(payment.equals("leave")) {
             if (keyword != null) {
-                List<Leave> list = leaveService.search2(keyword, state, state2);
+                List<Leave> list = leaveService.search2(keyword);
                 model.addAttribute("list", list);
                 model.addAttribute("leave", "leave");
             } else {
@@ -388,11 +391,11 @@ public class PaymentController {
 
         } else {
             if (keyword != null) {
-                List<BusinessCard> list = businessCardService.search2(keyword, state, state2);
+                List<BusinessCard> list = businessCardService.search2(keyword);
                 model.addAttribute("list", list);
                 model.addAttribute("card", "card");
             } else {
-                List<BusinessCard> list = businessCardService.selectByApproverNoAndStateOrState(employeeNo, state, state2);
+                List<BusinessCard> list = businessCardService.selectByApproverNoAndStateOrState(employeeNo);
                 model.addAttribute("list", list);
                 model.addAttribute("card", "card");
             }

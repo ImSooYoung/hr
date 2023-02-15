@@ -95,18 +95,18 @@ public class BusinessTripService {
         }
     }
 
-    public List<BusinessTrip> search(String keyword, PaymentState state){
+    public List<BusinessTrip> search(String keyword){
 
         List<BusinessTrip> list = new ArrayList<>();
-        list = businessTripRepository.searchByKeyword(keyword, state);
+        list = businessTripRepository.searchByKeyword(keyword);
 
         return list;
     }
 
-    public List<BusinessTrip> search2(String keyword, PaymentState state, PaymentState state2){
+    public List<BusinessTrip> search2(String keyword){
 
         List<BusinessTrip> list = new ArrayList<>();
-        list = businessTripRepository.searchByKeyword2(keyword, state, state2);
+        list = businessTripRepository.searchByKeyword2(keyword);
 
         return list;
     }

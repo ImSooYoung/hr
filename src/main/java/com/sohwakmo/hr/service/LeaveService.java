@@ -94,18 +94,18 @@ public class LeaveService {
         return no;
     }
 
-    public List<Leave> search(String keyword, PaymentState state){
+    public List<Leave> search(String keyword){
 
         List<Leave> list = new ArrayList<>();
-        list = leaveRepository.searchByKeyword(keyword, state);
+        list = leaveRepository.searchByKeyword(keyword);
 
         return list;
     }
 
-    public List<Leave> search2(String keyword, PaymentState state, PaymentState state2){
+    public List<Leave> search2(String keyword){
 
         List<Leave> list = new ArrayList<>();
-        list = leaveRepository.searchByKeyword2(keyword, state, state2);
+        list = leaveRepository.searchByKeyword2(keyword);
 
         return list;
     }

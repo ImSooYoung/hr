@@ -28,24 +28,25 @@ public interface BusinessTripRepository extends JpaRepository<BusinessTrip, Inte
     List<BusinessTrip> findByEmployeeNoAndEffectiveDateContaining(String emplyeeNo, String formatedNow);
 
     // JPQL(Java Persistence Query Language)
-    @Query(
-            "select b from BUSINESSTRIP b "
-                    + " where lower(b.title) like lower('%' || :keyword || '%') "
-                    + " or lower(b.reason) like lower('%' || :keyword || '%') "
-                    + " and b.state = '진행중'"
+    @Query(value =
+            "select * from BUSINESSTRIP b, BUSINESSCARD_STATE bs"
+                    + " where b.no = bs.businesscard_no"
+                    + " and (lower(b.title) like lower('%' || :keyword || '%') or lower(b.reason) like lower('%' || :keyword || '%')) "
+                    + " and bs.state = '진행중'"
                     + " order by b.no desc"
+            , nativeQuery = true
     )
-    List<BusinessTrip> searchByKeyword(@Param(value = "keyword") String keyword, @Param(value = "state") PaymentState state);
+    List<BusinessTrip> searchByKeyword(@Param(value = "keyword") String keyword);
 
-    @Query(
-            "select b from BUSINESSTRIP b "
-                    + " where lower(b.title) like lower('%' || :keyword || '%') "
-                    + " or lower(b.reason) like lower('%' || :keyword || '%') "
-                    + " and b.state = '승인'"
-                    + " or b.state = '반려'"
+    @Query(value =
+            "select * from BUSINESSTRIP b, BUSINESSCARD_STATE bs "
+                    + " where b.no = bs.businesscard_no"
+                    + " and (lower(b.title) like lower('%' || :keyword || '%') or lower(b.reason) like lower('%' || :keyword || '%')) "
+                    + " and (bs.state = '승인' or bs.state = '반려')"
                     + " order by b.no desc"
+            , nativeQuery = true
     )
-    List<BusinessTrip> searchByKeyword2(@Param(value = "keyword") String keyword, @Param(value = "state") PaymentState state, @Param(value = "state") PaymentState state2);
+    List<BusinessTrip> searchByKeyword2(@Param(value = "keyword") String keyword);
 
 }
 

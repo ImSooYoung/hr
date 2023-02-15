@@ -26,23 +26,24 @@ public interface LeaveRepository extends JpaRepository<Leave, Integer> {
     List<Leave> findByApproverNoOrSecondApproverNoAndState(String no, String no2, PaymentState state);
 
     // JPQL(Java Persistence Query Language)
-    @Query(
-            "select l from LEAVE l "
-                    + " where lower(l.title) like lower('%' || :keyword || '%') "
-                    + " or lower(l.reason) like lower('%' || :keyword || '%') "
-                    + " and l.state = '진행중' "
+    @Query(value =
+            "select * from LEAVE l, LEAVE_STATE ls "
+                    + " where l.no = ls.leave_no"
+                    + " and (lower(l.title) like lower('%' || :keyword || '%') or lower(l.reason) like lower('%' || :keyword || '%')) "
+                    + " and ls.state = '진행중' "
                     + " order by l.no desc"
+            , nativeQuery = true
     )
-    List<Leave> searchByKeyword(@Param(value = "keyword") String keyword, @Param(value = "state") PaymentState state);
+    List<Leave> searchByKeyword(@Param(value = "keyword") String keyword);
 
     // JPQL(Java Persistence Query Language)
-    @Query(
-            "select l from LEAVE l "
-                    + " where lower(l.title) like lower('%' || :keyword || '%') "
-                    + " or lower(l.reason) like lower('%' || :keyword || '%') "
-                    + " and l.state = '승인'"
-                    + " or l.state = '반려'"
+    @Query(value =
+            "select * from LEAVE l, LEAVE_STATE ls "
+                    + " where l.no = ls.leave_no"
+                    + " and (lower(l.title) like lower('%' || :keyword || '%') or lower(l.reason) like lower('%' || :keyword || '%')) "
+                    + " and (ls.state = '승인' or ls.state = '반려')"
                     + " order by l.no desc"
+            , nativeQuery = true
     )
-    List<Leave> searchByKeyword2(@Param(value = "keyword") String keyword, @Param(value = "state") PaymentState state, @Param(value = "state") PaymentState state2);
+    List<Leave> searchByKeyword2(@Param(value = "keyword") String keyword);
 }

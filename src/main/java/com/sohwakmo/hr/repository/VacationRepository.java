@@ -33,25 +33,26 @@ public interface VacationRepository extends JpaRepository<Vacation, Integer> {
     @Query("select v from VACATION v where v.no = :no ")
     Vacation selectByNo(@Param(value = "no") Integer no);
 
-//    // JPQL(Java Persistence Query Language)
-//    @Query(
-//            "select v from VACATION v "
-//                    + " where lower(v.title) like lower('%' || :keyword || '%') "
-//                    + " or lower(v.reason) like lower('%' || :keyword || '%') "
-//                    + " and v.state = '진행중'"
-//                    + " order by v.no desc"
-//    )
-//    List<Vacation> searchByKeyword(@Param(value = "keyword") String keyword, @Param(value = "state") PaymentState state);
-//
-//    // JPQL(Java Persistence Query Language)
-//    @Query(
-//            "select v from VACATION v "
-//                    + " where lower(v.title) like lower('%' || :keyword || '%') "
-//                    + " or lower(v.reason) like lower('%' || :keyword || '%') "
-//                    + " and v.state = '승인'"
-//                    + " or v.state = '반려'"
-//                    + " order by v.no desc"
-//    )
-//    List<Vacation> searchByKeyword2(@Param(value = "keyword") String keyword, @Param(value = "state") PaymentState state, @Param(value = "state2") PaymentState state2);
+    // JPQL(Java Persistence Query Language)
+    @Query(value =
+            "select * from VACATION v, VACATION_STATE vs "
+                    + " where v.no = vs.vacation_no"
+                    + " and vs.state = '진행중'"
+                    + " and (lower(v.title) like lower('%' || :keyword || '%') or lower(v.reason) like lower('%' || :keyword || '%'))"
+                    + " order by v.no desc",
+            nativeQuery = true
+    )
+    List<Vacation> searchByKeyword(@Param(value = "keyword") String keyword);
+
+    // JPQL(Java Persistence Query Language)
+    @Query(value =
+            "select * from VACATION v, VACATION_STATE vs "
+                    + " where v.no = vs.vacation_no"
+                    + " and (vs.state = '승인' or vs.state = '반려')"
+                    + " and (lower(v.title) like lower('%' || :keyword || '%') or lower(v.reason) like lower('%' || :keyword || '%'))"
+                    + " order by v.no desc",
+            nativeQuery = true
+    )
+    List<Vacation> searchByKeyword2(@Param(value = "keyword") String keyword);
 
 }

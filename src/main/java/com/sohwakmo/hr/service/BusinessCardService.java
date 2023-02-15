@@ -56,8 +56,8 @@ public class BusinessCardService {
         return businessCardRepository.findByApproverNoAndState(no, state);
     }
 
-    public List<BusinessCard> selectByApproverNoAndStateOrState(String no, PaymentState state, PaymentState state2){
-        return businessCardRepository.findByApproverNoAndStateOrState(no, state, state2);
+    public List<BusinessCard> selectByApproverNoAndStateOrState(String no){
+        return businessCardRepository.findByApproverNoAndStateOrState(no);
     }
 
     @Transactional
@@ -99,18 +99,18 @@ public class BusinessCardService {
         }
     }
 
-    public List<BusinessCard> search(String keyword, PaymentState state){
+    public List<BusinessCard> search(String keyword){
 
         List<BusinessCard> list = new ArrayList<>();
-        list = businessCardRepository.searchByKeyword(keyword, state);
+        list = businessCardRepository.searchByKeyword(keyword);
 
         return list;
     }
 
-    public List<BusinessCard> search2(String keyword, PaymentState state, PaymentState state2){
+    public List<BusinessCard> search2(String keyword){
 
         List<BusinessCard> list = new ArrayList<>();
-        list = businessCardRepository.searchByKeyword2(keyword, state, state2);
+        list = businessCardRepository.searchByKeyword2(keyword);
 
         return list;
     }
