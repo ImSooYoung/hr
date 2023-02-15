@@ -98,4 +98,21 @@ public class BusinessCardService {
             return list;
         }
     }
+
+    public List<BusinessCard> search(String keyword, PaymentState state){
+
+        List<BusinessCard> list = new ArrayList<>();
+        list = businessCardRepository.searchByKeyword(keyword, state);
+
+        return list;
+    }
+
+    public List<BusinessCard> search2(String keyword, PaymentState state, PaymentState state2){
+
+        List<BusinessCard> list = new ArrayList<>();
+        list = businessCardRepository.searchByKeyword2(keyword, state, state2);
+
+        return list;
+    }
+
 }

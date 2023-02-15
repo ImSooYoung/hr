@@ -100,4 +100,27 @@ public class VacationService {
 
         return no;
     }
+
+    public List<Vacation> search(String keyword, PaymentState state){
+
+        List<Vacation> list = new ArrayList<>();
+//        list = vacationRepository.searchByKeyword(keyword, state);
+        log.info("리스트={}",list);
+
+        list = null;
+
+        return list;
+    }
+
+    public List<Vacation> search2(String keyword, PaymentState state, PaymentState state2){
+
+        List<Vacation> list = new ArrayList<>();
+//        list = vacationRepository.searchByKeyword2(keyword, state, state2);
+        log.info("리스트={}",list);
+
+        list = null;
+
+        return list;
+    }
+
 }

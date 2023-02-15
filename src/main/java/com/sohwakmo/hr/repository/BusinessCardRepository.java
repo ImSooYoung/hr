@@ -1,9 +1,6 @@
 package com.sohwakmo.hr.repository;
 
-import com.sohwakmo.hr.domain.BusinessCard;
-import com.sohwakmo.hr.domain.Employee;
-import com.sohwakmo.hr.domain.Leave;
-import com.sohwakmo.hr.domain.PaymentState;
+import com.sohwakmo.hr.domain.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -30,4 +27,25 @@ public interface BusinessCardRepository extends JpaRepository<BusinessCard, Inte
     List<BusinessCard> findByApproverNoAndStateOrState(String no, PaymentState state, PaymentState state2);
 
     List<BusinessCard> findByEmployeeNoOrderByNoDesc(String employeeNo);
+
+    // JPQL(Java Persistence Query Language)
+    @Query(
+            "select b from BUSINESSCARD b "
+                    + " where lower(b.title) like lower('%' || :keyword || '%') "
+                    + " or lower(b.reason) like lower('%' || :keyword || '%') "
+                    + " and b.state = '승인'"
+                    + " or b.state = '반려'"
+                    + " order by b.no desc"
+    )
+    List<BusinessCard> searchByKeyword2(@Param(value = "keyword") String keyword, @Param(value = "state") PaymentState state,  @Param(value = "state") PaymentState state2);
+
+    // JPQL(Java Persistence Query Language)
+    @Query(
+            "select b from BUSINESSCARD b "
+                    + " where lower(b.title) like lower('%' || :keyword || '%') "
+                    + " or lower(b.reason) like lower('%' || :keyword || '%') "
+                    + " and b.state = '진행중' "
+                    + " order by b.no desc"
+    )
+    List<BusinessCard> searchByKeyword(@Param(value = "keyword") String keyword, @Param(value = "state") PaymentState state);
 }

@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -83,7 +84,7 @@ public class LeaveService {
         return leaveRepository.findByApproverNoOrSecondApproverNoAndStateOrState(no, no2, state, state2);
     }
 
-    public List<Leave> selectByApproverNoOrSecondNoAndState(String no, String no2, PaymentState state){
+    public List<Leave> selectByApproverNoOrSecondApproverNoAndState(String no, String no2, PaymentState state){
         return leaveRepository.findByApproverNoOrSecondApproverNoAndState(no, no2, state);
     }
 
@@ -91,6 +92,22 @@ public class LeaveService {
     public Integer delete(Integer no){
         leaveRepository.deleteById(no);
         return no;
+    }
+
+    public List<Leave> search(String keyword, PaymentState state){
+
+        List<Leave> list = new ArrayList<>();
+        list = leaveRepository.searchByKeyword(keyword, state);
+
+        return list;
+    }
+
+    public List<Leave> search2(String keyword, PaymentState state, PaymentState state2){
+
+        List<Leave> list = new ArrayList<>();
+        list = leaveRepository.searchByKeyword2(keyword, state, state2);
+
+        return list;
     }
 
 }

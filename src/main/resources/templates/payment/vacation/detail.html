@@ -301,7 +301,7 @@
                         </div>
                     </div>
                     <br>
-                    <div th:if="${#authentication.principal.position == '팀장' and vacation.completeDate == null}">
+                    <div th:if="${#authentication.principal.employeeNo == vacation.approverNo and vacation.completeDate == null}">
                         <div class="card mb-8">
                             <input type="submit" class="btn btn-primary" id="buttonComplete" value="승인" data-rid="${vacation.no}" onclick="getComplete('/api/payment/vacation/complete/')" />
                             <br>

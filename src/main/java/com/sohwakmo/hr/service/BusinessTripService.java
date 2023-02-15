@@ -94,4 +94,21 @@ public class BusinessTripService {
             return list;
         }
     }
+
+    public List<BusinessTrip> search(String keyword, PaymentState state){
+
+        List<BusinessTrip> list = new ArrayList<>();
+        list = businessTripRepository.searchByKeyword(keyword, state);
+
+        return list;
+    }
+
+    public List<BusinessTrip> search2(String keyword, PaymentState state, PaymentState state2){
+
+        List<BusinessTrip> list = new ArrayList<>();
+        list = businessTripRepository.searchByKeyword2(keyword, state, state2);
+
+        return list;
+    }
+
 }

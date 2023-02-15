@@ -284,57 +284,119 @@ public class PaymentController {
     }
 
     @GetMapping("/request")
-    public void request(Model model, @RequestParam(defaultValue = "vacation")String payment, Principal principal){
+    public void request(Model model, @RequestParam(defaultValue = "vacation")String payment, @RequestParam(defaultValue = "") String keyword ,Principal principal){
 
+        log.info("서치1={}", payment);
+        log.info("서치={}", keyword);
         String employeeNo = principal.getName();
         PaymentState state = PaymentState.진행중;
 
-        if(payment.equals("vacation")){
-            List<Vacation> list = vacationService.selectByApproverNoAndState(employeeNo, state);
-            log.info("요청 리스트={}", list);
-            model.addAttribute("list", list);
-            model.addAttribute("vacation", "vacation");
+        if(payment.equals("vacation")) {
+
+            if (keyword != null) {
+                List<Vacation> list = vacationService.search(keyword, state);
+                model.addAttribute("list", list);
+                model.addAttribute("vacation", "vacation");
+            } else  {
+                List<Vacation> list = vacationService.selectByApproverNoAndState(employeeNo, state);
+                model.addAttribute("list", list);
+                model.addAttribute("vacation", "vacation");
+            }
+
         } else if(payment.equals("trip")) {
-            List<BusinessTrip> list = businessTripService.selectByApproverNoAndState(employeeNo, state);
-            model.addAttribute("list", list);
-            model.addAttribute("trip", "trip");
+
+            if (keyword != null){
+                List<BusinessTrip> list = businessTripService.search(keyword, state);
+                model.addAttribute("list", list);
+                model.addAttribute("trip", "trip");
+            } else {
+                List<BusinessTrip> list = businessTripService.selectByApproverNoAndState(employeeNo, state);
+                model.addAttribute("list", list);
+                model.addAttribute("trip", "trip");
+            }
+
+
         } else if(payment.equals("leave")) {
-            List<Leave> list = leaveService.selectByApproverNoOrSecondNoAndState(employeeNo,employeeNo, state);
-            log.info("요청 리스트={}", list);
-            model.addAttribute("list", list);
-            model.addAttribute("leave", "leave");
-        } else {
-            List<BusinessCard> list = businessCardService.selectByApproverNoAndState(employeeNo, state);
-            model.addAttribute("list", list);
-            model.addAttribute("card", "card");
+
+            if (keyword != null){
+                List<Leave> list = leaveService.search(keyword, state);
+                model.addAttribute("list", list);
+                model.addAttribute("leave", "leave");
+            } else {
+                List<Leave> list = leaveService.selectByApproverNoOrSecondApproverNoAndState(employeeNo, employeeNo, state);
+                model.addAttribute("list", list);
+                model.addAttribute("leave", "leave");
+            }
+
+        } else if(payment.equals("card")){
+            log.info("test");
+            if (keyword != null) {
+                List<BusinessCard> list = businessCardService.search(keyword, state);
+                model.addAttribute("list", list);
+                model.addAttribute("card", "card");
+            } else {
+                List<BusinessCard> list = businessCardService.selectByApproverNoAndState(employeeNo, state);
+                log.info("리스트={}",list);
+                model.addAttribute("list", list);
+                model.addAttribute("card", "card");
+            }
+
         }
     }
 
     @GetMapping("/response")
-    public void response(Model model, @RequestParam(defaultValue = "vacation")String payment,  Principal principal){
+    public void response(Model model, @RequestParam(defaultValue = "vacation")String payment, @RequestParam(defaultValue = "") String keyword, Principal principal){
 
         String employeeNo = principal.getName();
         PaymentState state = PaymentState.승인;
         PaymentState state2 = PaymentState.반려;
 
         if(payment.equals("vacation")){
-            List<Vacation> list = vacationService.selectByApproverNoAndStateOrState(employeeNo, state, state2);
-            log.info(list.toString());
-            model.addAttribute("list", list);
-            model.addAttribute("vacation", "vacation");
+            if (keyword != null) {
+                List<Vacation> list = vacationService.search2(keyword, state, state2);
+                log.info(list.toString());
+                model.addAttribute("list", list);
+                model.addAttribute("vacation", "vacation");
+            } else {
+                List<Vacation> list = vacationService.selectByApproverNoAndStateOrState(employeeNo, state, state2);
+                log.info(list.toString());
+                model.addAttribute("list", list);
+                model.addAttribute("vacation", "vacation");
+            }
+
         } else if(payment.equals("trip")) {
-            List<BusinessTrip> list = businessTripService.selectByApproverNoAndStateOrState(employeeNo, state, state2);
-            log.info(list.toString());
-            model.addAttribute("list", list);
-            model.addAttribute("trip", "trip");
+            if (keyword != null) {
+                List<BusinessTrip> list = businessTripService.search2(keyword, state, state2);
+                model.addAttribute("list", list);
+                model.addAttribute("trip", "trip");
+            } else {
+                List<BusinessTrip> list = businessTripService.selectByApproverNoAndStateOrState(employeeNo, state, state2);
+                model.addAttribute("list", list);
+                model.addAttribute("trip", "trip");
+            }
+
         } else if(payment.equals("leave")) {
-            List<Leave> list = leaveService.selectByApproverNoOrSecondApproverNoAndStateOrState(employeeNo, employeeNo, state, state2);
-            model.addAttribute("list", list);
-            model.addAttribute("leave", "leave");
+            if (keyword != null) {
+                List<Leave> list = leaveService.search2(keyword, state, state2);
+                model.addAttribute("list", list);
+                model.addAttribute("leave", "leave");
+            } else {
+                List<Leave> list = leaveService.selectByApproverNoOrSecondApproverNoAndStateOrState(employeeNo, employeeNo, state, state2);
+                model.addAttribute("list", list);
+                model.addAttribute("leave", "leave");
+            }
+
         } else {
-            List<BusinessCard> list = businessCardService.selectByApproverNoAndStateOrState(employeeNo, state, state2);
-            model.addAttribute("list", list);
-            model.addAttribute("card", "card");
+            if (keyword != null) {
+                List<BusinessCard> list = businessCardService.search2(keyword, state, state2);
+                model.addAttribute("list", list);
+                model.addAttribute("card", "card");
+            } else {
+                List<BusinessCard> list = businessCardService.selectByApproverNoAndStateOrState(employeeNo, state, state2);
+                model.addAttribute("list", list);
+                model.addAttribute("card", "card");
+            }
+
         }
     }
 

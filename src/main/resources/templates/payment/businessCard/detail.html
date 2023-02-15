@@ -308,7 +308,7 @@
                     </div>
                 </div>
                 <br>
-                <div th:if="${#authentication.principal.position == '팀장' and card.completeDate == null}">
+                <div th:if="${#authentication.principal.employeeNo == card.approverNo and card.completeDate == null}">
                     <div class="card mb-8">
                         <input type="submit" class="btn btn-primary" id="buttonCompleteCard"  data-rid="${card.no}" value="승인" onclick="getComplete('/api/payment/card/complete/')"/>
                         <br>
