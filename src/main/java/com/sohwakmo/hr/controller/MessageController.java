@@ -96,7 +96,7 @@ public class MessageController {
      */
     @GetMapping("/receiveList")
     public String receiveList(String employeeNo, Model model, String messageType, String contentType, String keyword,
-                              @PageableDefault(page = 0, size = 5, sort = "messageNo", direction = Sort.Direction.DESC) Pageable pageable) {
+                              @PageableDefault(page = 0, size = 10, sort = "messageNo", direction = Sort.Direction.DESC) Pageable pageable) {
         log.info("receiveList(employeeNo = {}, messageType = {}, contentType = {}, keyword = {})", employeeNo, messageType, contentType, keyword);
 
         Page<MessageSearchDto> messageList;
@@ -153,7 +153,7 @@ public class MessageController {
      */
     @GetMapping("/sendList")
     public String sendList(String employeeNo, Model model, String messageType, String contentType, String keyword,
-                           @PageableDefault(page = 0, size = 5, sort = "messageNo", direction = Sort.Direction.DESC) Pageable pageable) {
+                           @PageableDefault(page = 0, size = 10, sort = "messageNo", direction = Sort.Direction.DESC) Pageable pageable) {
         log.info("sendList(employeeNo = {}, messageType = {}, contentType = {}, keyword = {})", employeeNo, messageType, contentType, keyword);
 
         Page<MessageSearchDto> messageList;
@@ -206,7 +206,7 @@ public class MessageController {
      */
     @GetMapping("/trashList")
     public String trashList(String employeeNo, Model model, String messageType, String contentType, String keyword,
-                            @PageableDefault(page = 0, size = 5, sort = "messageNo", direction = Sort.Direction.DESC) Pageable pageable) {
+                            @PageableDefault(page = 0, size = 10, sort = "messageNo", direction = Sort.Direction.DESC) Pageable pageable) {
         log.info("trashList(employeeNo = {}, messageType = {}, contentType = {}, keyword = {})", employeeNo, messageType, contentType, keyword);
 
         Page<MessageSearchDto> messageList;
