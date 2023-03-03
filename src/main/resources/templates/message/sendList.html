@@ -84,16 +84,16 @@
             <nav aria-label="Page navigation example" class="my-3 mb-3">
                 <ul class="pagination justify-content-center">
                     <li class="page-item" th:classappend="${messageList.pageable.pageNumber == 0 } ? 'disabled'">
-                        <a class="page-link" th:href="@{/message/sendList(page=${messageList.pageable.pageNumber -1}, contentType=${param.contentType}, keyword=${param.keyword}, messageType=${param.messageType} )}" tabindex="-1" aria-label="Previous">
+                        <a class="page-link" th:href="@{/message/sendList(page=${messageList.pageable.pageNumber -1}, contentType=${param.contentType}, keyword=${param.keyword}, messageType=${param.messageType}, employeeNo=${#authentication.principal.employeeNo} )}" tabindex="-1" aria-label="Previous">
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
                     <li class="page-item " th:classappend="${num == messageList.pageable.pageNumber+1} ? 'disabled'" th:each="num : ${#numbers.sequence(startPage, endPage)}">
-                        <a class="page-link"  th:href="@{/message/sendList(page=${num -1}, contentType=${param.contentType}, keyword=${param.keyword}, messageType=${param.messageType} )}", th:text="${num}">1</a>
+                        <a class="page-link"  th:href="@{/message/sendList(page=${num -1}, contentType=${param.contentType}, keyword=${param.keyword}, messageType=${param.messageType}, employeeNo=${#authentication.principal.employeeNo} )}", th:text="${num}">1</a>
                     </li>
 
                     <li class="page-item" th:classappend="${messageList.totalPages <= messageList.pageable.pageNumber + 1} ? 'disabled'">
-                        <a class="page-link " th:href="@{/message/sendList(page=${messageList.pageable.pageNumber + 1}, contentType=${param.contentType}, keyword=${param.keyword}, messageType=${param.messageType} )}" aria-label="Next">
+                        <a class="page-link " th:href="@{/message/sendList(page=${messageList.pageable.pageNumber + 1}, contentType=${param.contentType}, keyword=${param.keyword}, messageType=${param.messageType}, employeeNo=${#authentication.principal.employeeNo} )}" aria-label="Next">
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
