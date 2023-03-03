@@ -138,7 +138,7 @@ public class MessageController {
 
         messageService.receiveSendTrash(employeeNo, messageCheckBox);
 
-        return "redirect:/message/receiveList";
+        return "redirect:/message/receiveList?employeeNo="+employeeNo+"";
     }
 
     /**
@@ -196,7 +196,7 @@ public class MessageController {
 
         messageService.senderSendTrash(employeeNo, messageCheckBox);
 
-        return "redirect:/message/sendList";
+        return "redirect:/message/sendList?employeeNo="+employeeNo+"";
     }
 
     /**
@@ -248,7 +248,7 @@ public class MessageController {
 
         messageService.trashSendDelete(employeeNo, messageCheckBox);
 
-        return "redirect:/message/trashList";
+        return "redirect:/message/trashList?employeeNo="+employeeNo+"";
     }
 
     /**
