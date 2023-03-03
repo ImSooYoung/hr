@@ -24,9 +24,13 @@ window.addEventListener('DOMContentLoaded', () => {
         if(receiveName.value == '') { alert("수신자를 선택해 주세요."); return; }
         if(content.value == '') { alert("내용을 입력해 주세요."); return; }
 
+        let refer = document.referrer;
+        let referArray = refer.split('/');
+        let url = referArray[referArray.length-1];
+        console.log(url);
         const result = confirm("보내시겠습니까?")
         if(result) {
-            formBody.action = '/message/sendMessage';
+            formBody.action = '/message/sendMessage?url='+url;
             formBody.method = 'post';
             formBody.submit();
         }

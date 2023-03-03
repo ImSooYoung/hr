@@ -49,12 +49,12 @@ public class MessageController {
      * @throws IOException
      */
     @PostMapping("/sendMessage")
-    public String sendMessage(MessageSendDto dto, @RequestParam("files") List<MultipartFile> files) throws IOException {
-        log.info("sendMessage(dto = {}, files = {})", dto, files);
+    public String sendMessage(MessageSendDto dto, @RequestParam("files") List<MultipartFile> files, String url) throws IOException {
+        log.info("sendMessage(dto = {}, files = {}, url= {})", dto, files, url);
 
         messageService.create(dto, files);
 
-        return "redirect:/message/receiveList";
+        return "redirect:/message/"+url;
     }
 
     /**
