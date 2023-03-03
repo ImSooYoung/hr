@@ -17,6 +17,7 @@
         <div class="card-body">
             <div class="my-2">
                 <form method="get" th:action="@{ /message/trashList }">
+                    <input type="hidden" name="employeeNo" th:value="${#authentication.principal.employeeNo}" />
                     <div class="row">
                         <div class="col-2">
                             전체 <span style="color:red;" th:text=" ${ messageCount }"></span>
